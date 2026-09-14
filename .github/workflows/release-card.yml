@@ -1,0 +1,24 @@
+name: Compile and upload card
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  compile-and-upload-card:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v6
+
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: card.tex
+          latexmk_use_xelatex: true
+
+      - name: Upload PDF file
+        uses: actions/upload-artifact@v6
+        with:
+          name: PDF
+          path: card.pdf
